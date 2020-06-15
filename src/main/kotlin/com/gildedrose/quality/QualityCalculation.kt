@@ -18,28 +18,29 @@ fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
 
 
 fun calculateBackstageQuality(): (Item) -> Item = { item ->
-    var quality = item.quality
-    if (quality < MAX_QUALITY_ALLOWED) {
-        quality += 1
-
-        if (item.sellIn < 10) {
-            if (quality < MAX_QUALITY_ALLOWED) {
-                quality += 1
-            }
-        }
-
-        if (item.sellIn < 5) {
-            if (quality < MAX_QUALITY_ALLOWED) {
-                quality += 1
-            }
-        }
-    }
-    if (item.sellIn < 0) {
-        quality = 0
-    }
-
-    Item(item.name, item.sellIn, quality)
+    Item(item.name, item.sellIn, min(calculateBackstageQualityFor(item), MAX_QUALITY_ALLOWED))
 }
+
+private fun calculateBackstageQualityFor(item: Item): Int {
+    if (concertIsOver(item.sellIn)) {
+        return 0
+    }
+    var quality = item.quality + 1
+    if (concertIsWithinSixAndTenDays(item)) {
+        quality += 1
+    } else if (concertIsInFiveOrLessDays(item)) {
+        quality += 2
+    }
+    return quality
+}
+
+private fun concertIsInFiveOrLessDays(item: Item) = item.sellIn < 5
+
+private val WITHIN_SIX_AND_TEN_DAYS = 5..9
+
+private fun concertIsWithinSixAndTenDays(item: Item) = item.sellIn in WITHIN_SIX_AND_TEN_DAYS
+
+private fun concertIsOver(sellIn: Int) = sellIn <= 0
 
 
 fun calculateQuality(): (Item) -> Item = { item ->

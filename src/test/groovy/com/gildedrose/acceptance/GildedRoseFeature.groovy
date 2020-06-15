@@ -7,7 +7,7 @@ import com.tngtech.jgiven.spock.ScenarioSpec
 
 class GildedRoseFeature extends ScenarioSpec<Given, When, Then> {
 
-    def "should update quality"() {
+    def "should update inventory"() {
         expect:
         given().item_$_with_sell_in_$_and_quality_$(name, sellIn, quality)
         when().the_item_quality_is_updated_after_one_day()
@@ -24,6 +24,7 @@ class GildedRoseFeature extends ScenarioSpec<Given, When, Then> {
         "Aged Brie"                                 | 1      | 48      || 0              | 49
         "Sulfuras, Hand of Ragnaros"                | -1     | 80      || -1             | 80
         "Backstage passes to a TAFKAL80ETC concert" | 12     | 20      || 11             | 21
+        "Backstage passes to a TAFKAL80ETC concert" | 7      | 20      || 6              | 22
         "Backstage passes to a TAFKAL80ETC concert" | 5      | 47      || 4              | 50
         "Backstage passes to a TAFKAL80ETC concert" | -1     | 49      || -2             | 0
         "Backstage passes to a TAFKAL80ETC concert" | 2      | 50      || 1              | 50
