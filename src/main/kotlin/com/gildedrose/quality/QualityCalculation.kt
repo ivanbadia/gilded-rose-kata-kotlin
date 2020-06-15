@@ -4,59 +4,61 @@ import com.gildedrose.Item
 import com.gildedrose.Products
 
 fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
-    if (item.quality < 50) {
-        item.quality = item.quality + 1
+    var quality = item.quality
+    if (quality < 50) {
+        quality += 1
 
     }
     if (item.sellIn < 0) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1
+        if (quality < 50) {
+            quality += 1
         }
     }
 
-    item
+    Item(item.name, item.sellIn, quality)
 }
 
 
 fun calculateBackstageQuality(): (Item) -> Item = { item ->
-    if (item.quality < 50) {
-        item.quality = item.quality + 1
+    var quality = item.quality
+    if (quality < 50) {
+        quality += 1
 
         if (item.sellIn < 10) {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1
+            if (quality < 50) {
+                quality += 1
             }
         }
 
         if (item.sellIn < 5) {
-            if (item.quality < 50) {
-                item.quality = item.quality + 1
+            if (quality < 50) {
+                quality += 1
             }
         }
     }
     if (item.sellIn < 0) {
-        item.quality = item.quality - item.quality
+        quality = 0
     }
-    item
+
+    Item(item.name, item.sellIn, quality)
 }
 
 
 fun calculateQuality(): (Item) -> Item = { item ->
-    if (item.quality > 0) {
-        item.quality = item.quality - 1
+    var quality = item.quality
+    if (quality > 0) {
+        quality -= 1
     }
     if (item.sellIn < 0) {
-        if (item.quality > 0) {
-            item.quality = item.quality - 1
+        if (quality > 0) {
+            quality -= 1
         }
     }
-    item
+    Item(item.name, item.sellIn, quality)
 }
 
 
-fun calculateSulfurasQuality(): (Item) -> Item = { item ->
-    item
-}
+fun calculateSulfurasQuality(): (Item) -> Item = { it }
 
 val QUALITY_FUNCTIONS = mapOf(
         Products.AGED_BRIE to calculateAgedBrieQuality(),

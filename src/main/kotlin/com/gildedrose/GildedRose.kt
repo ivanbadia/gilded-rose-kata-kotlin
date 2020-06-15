@@ -6,10 +6,13 @@ import com.gildedrose.sellin.calculateSellInFor
 class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
-        items
-                .map {item -> calculateSellInFor(item)}
-                .map { item -> getQualityCalculationFor(item.name)(item) }
+        items = items
+                .map { item -> calculateSellInFor(item) }
+                .map { item -> calculateQualityFor(item) }
+                .toTypedArray()
     }
+
+    private fun calculateQualityFor(item: Item) = getQualityCalculationFor(item.name)(item)
 
 }
 
