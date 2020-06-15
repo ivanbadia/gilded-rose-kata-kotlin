@@ -26,6 +26,7 @@ class GildedRoseFeature extends ScenarioSpec<Given, When, Then> {
         "Backstage passes to a TAFKAL80ETC concert" | 12     | 20      || 11             | 21
         "Backstage passes to a TAFKAL80ETC concert" | 5      | 47      || 4              | 50
         "Backstage passes to a TAFKAL80ETC concert" | -1     | 49      || -2             | 0
+        "Backstage passes to a TAFKAL80ETC concert" | 2      | 51      || 1              | 51
     }
 
 }
