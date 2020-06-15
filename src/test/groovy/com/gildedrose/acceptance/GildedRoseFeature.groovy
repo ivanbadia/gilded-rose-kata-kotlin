@@ -19,14 +19,14 @@ class GildedRoseFeature extends ScenarioSpec<Given, When, Then> {
         "+5 Dexterity Vest"                         | -1     | 0       || -2             | 0
         "+5 Dexterity Vest"                         | -1     | 2       || -2             | 0
         "Elixir of the Mongoose"                    | 5      | 7       || 4              | 6
-        "Aged Brie"                                 | -1     | 51      || -2             | 51
+        "Aged Brie"                                 | -1     | 50      || -2             | 50
         "Aged Brie"                                 | -1     | 48      || -2             | 50
         "Aged Brie"                                 | 1      | 48      || 0              | 49
         "Sulfuras, Hand of Ragnaros"                | -1     | 80      || -1             | 80
         "Backstage passes to a TAFKAL80ETC concert" | 12     | 20      || 11             | 21
         "Backstage passes to a TAFKAL80ETC concert" | 5      | 47      || 4              | 50
         "Backstage passes to a TAFKAL80ETC concert" | -1     | 49      || -2             | 0
-        "Backstage passes to a TAFKAL80ETC concert" | 2      | 51      || 1              | 51
+        "Backstage passes to a TAFKAL80ETC concert" | 2      | 50      || 1              | 50
     }
 
 }
