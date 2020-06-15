@@ -1,20 +1,20 @@
 package com.gildedrose.acceptance.stages
 
-import com.gildedrose.Item
+import com.gildedrose.GildedRose
 import com.tngtech.jgiven.Stage
 import com.tngtech.jgiven.annotation.ProvidedScenarioState
 
 class Then extends Stage<Then> {
     @ProvidedScenarioState
-    private Item item
+    private GildedRose gildedRose
 
     def the_new_sell_in_is(int expectedSellIn) {
-        assert item.sellIn == expectedSellIn
+        assert gildedRose.items[0].sellIn == expectedSellIn
         self()
     }
 
     def the_new_quality_is(int expectedQuality) {
-        assert item.quality == expectedQuality
+        assert gildedRose.items[0].quality == expectedQuality
         self()
     }
 }
