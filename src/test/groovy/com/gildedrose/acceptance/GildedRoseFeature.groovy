@@ -24,10 +24,12 @@ class GildedRoseFeature extends ScenarioSpec<Given, When, Then> {
         "Aged Brie"                                 | 1      | 48      || 0              | 49
         "Sulfuras, Hand of Ragnaros"                | -1     | 80      || -1             | 80
         "Backstage passes to a TAFKAL80ETC concert" | 12     | 20      || 11             | 21
-        "Backstage passes to a TAFKAL80ETC concert" | 7      | 20      || 6              | 22
+        "Backstage passes to a TAFKAL80ETC concert" | 10     | 20      || 9              | 22
         "Backstage passes to a TAFKAL80ETC concert" | 5      | 47      || 4              | 50
         "Backstage passes to a TAFKAL80ETC concert" | -1     | 49      || -2             | 0
         "Backstage passes to a TAFKAL80ETC concert" | 2      | 50      || 1              | 50
+        "Conjured Mana Cake"                        | 2      | 50      || 1              | 48
+        "Conjured Mana Cake"                        | 1      | 1       || 0              | 0
     }
 
 }
