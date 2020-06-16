@@ -10,19 +10,15 @@ private const val MIN_QUALITY_ALLOWED = 0
 
 fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
     var quality = item.quality + 1
-
     if (sellByDateHasPassed(item)) {
         quality += 1
     }
-
     Item(item.name, item.sellIn, min(quality, MAX_QUALITY_ALLOWED))
 }
-
 
 fun calculateBackstageQuality(): (Item) -> Item = { item ->
     Item(item.name, item.sellIn, min(calculateBackstageQualityFor(item), MAX_QUALITY_ALLOWED))
 }
-
 
 fun calculateQuality(): (Item) -> Item = { item ->
     var quality = item.quality - 1
@@ -46,21 +42,21 @@ fun getQualityCalculationFor(itemName: String): (Item) -> Item {
 
 private fun sellByDateHasPassed(item: Item) = item.sellIn < 0
 
-private fun concertIsInFiveOrLessDays(item: Item) = item.sellIn < 5
-
-private fun concertIsWithinSixAndTenDays(item: Item) = item.sellIn in 5..9
-
-private fun concertIsOver(sellIn: Int) = sellIn <= 0
-
 private fun calculateBackstageQualityFor(item: Item): Int {
     if (concertIsOver(item.sellIn)) {
         return MIN_QUALITY_ALLOWED
     }
     var quality = item.quality + 1
-    if (concertIsWithinSixAndTenDays(item)) {
+    if (concertIsWithinFiveAndNineDays(item)) {
         quality += 1
-    } else if (concertIsInFiveOrLessDays(item)) {
+    } else if (concertIsInLessThanFiveDays(item)) {
         quality += 2
     }
     return quality
 }
+
+private fun concertIsInLessThanFiveDays(item: Item) = item.sellIn < 5
+
+private fun concertIsWithinFiveAndNineDays(item: Item) = item.sellIn in 5..9
+
+private fun concertIsOver(sellIn: Int) = sellIn <= 0
