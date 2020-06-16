@@ -37,15 +37,14 @@ fun calculateConjuredQuality(): (Item) -> Item = { item ->
 
 fun calculateQualityFor(item: Item) = getQualityCalculationFor(item.name)(item)
 
-private val QUALITY_CALCULATION_BY_PRODUCT = mapOf(
-        Products.AGED_BRIE to calculateAgedBrieQuality(),
-        Products.BACKSTAGE to calculateBackstageQuality(),
-        Products.CONJURED to calculateConjuredQuality(),
-        Products.SULFURAS to calculateSulfurasQuality()
-)
-
 private fun getQualityCalculationFor(itemName: String): (Item) -> Item {
-    return QUALITY_CALCULATION_BY_PRODUCT.getOrDefault(itemName, calculateDefaultQuality())
+    return when (itemName) {
+        Products.AGED_BRIE -> calculateAgedBrieQuality()
+        Products.BACKSTAGE -> calculateBackstageQuality()
+        Products.CONJURED -> calculateConjuredQuality()
+        Products.SULFURAS -> calculateSulfurasQuality()
+        else -> calculateDefaultQuality()
+    }
 }
 
 private fun sellByDateHasPassed(item: Item) = item.sellIn < 0
