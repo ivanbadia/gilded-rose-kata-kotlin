@@ -13,28 +13,6 @@ private const val DOUBLE_QUALITY_DEGRADATION = 2
 private const val DOUBLE_QUALITY_INCREMENT = 2
 private const val TRIPLE_QUALITY_INCREMENT = 3
 
-fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
-    val newQuality = calculateAgedBrieQualityFor(item)
-    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
-}
-
-fun calculateBackstageQuality(): (Item) -> Item = { item ->
-    val newQuality = calculateBackstageQualityFor(item)
-    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
-}
-
-fun calculateDefaultQuality(): (Item) -> Item = { item ->
-    val newQuality = calculateDefaultQualityFor(item)
-    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
-}
-
-fun calculateSulfurasQuality(): (Item) -> Item = { it }
-
-fun calculateConjuredQuality(): (Item) -> Item = { item ->
-    val newQuality = item.quality - DOUBLE_QUALITY_DEGRADATION
-    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
-}
-
 fun calculateQualityFor(item: Item) = getQualityCalculationFor(item.name)(item)
 
 private fun getQualityCalculationFor(itemName: String): (Item) -> Item {
@@ -45,6 +23,28 @@ private fun getQualityCalculationFor(itemName: String): (Item) -> Item {
         Products.SULFURAS -> calculateSulfurasQuality()
         else -> calculateDefaultQuality()
     }
+}
+
+private fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
+    val newQuality = calculateAgedBrieQualityFor(item)
+    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
+}
+
+private fun calculateBackstageQuality(): (Item) -> Item = { item ->
+    val newQuality = calculateBackstageQualityFor(item)
+    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
+}
+
+private fun calculateDefaultQuality(): (Item) -> Item = { item ->
+    val newQuality = calculateDefaultQualityFor(item)
+    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
+}
+
+private fun calculateSulfurasQuality(): (Item) -> Item = { it }
+
+private fun calculateConjuredQuality(): (Item) -> Item = { item ->
+    val newQuality = item.quality - DOUBLE_QUALITY_DEGRADATION
+    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
 }
 
 private fun sellByDateHasPassed(item: Item) = item.sellIn < 0
