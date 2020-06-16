@@ -14,34 +14,38 @@ private const val DOUBLE_QUALITY_INCREMENT = 2
 private const val TRIPLE_QUALITY_INCREMENT = 3
 
 fun calculateAgedBrieQuality(): (Item) -> Item = { item ->
-    val quality = calculateAgedBrieQualityFor(item)
-    Item(item.name, item.sellIn, min(quality, MAX_QUALITY_ALLOWED))
+    val newQuality = calculateAgedBrieQualityFor(item)
+    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
 }
 
 fun calculateBackstageQuality(): (Item) -> Item = { item ->
-    Item(item.name, item.sellIn, min(calculateBackstageQualityFor(item), MAX_QUALITY_ALLOWED))
+    val newQuality = calculateBackstageQualityFor(item)
+    Item(item.name, item.sellIn, min(newQuality, MAX_QUALITY_ALLOWED))
 }
 
-fun calculateQuality(): (Item) -> Item = { item ->
-    val quality = calculateQualityFor(item)
-    Item(item.name, item.sellIn, max(quality, MIN_QUALITY_ALLOWED))
+fun calculateDefaultQuality(): (Item) -> Item = { item ->
+    val newQuality = calculateDefaultQualityFor(item)
+    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
 }
 
 fun calculateSulfurasQuality(): (Item) -> Item = { it }
 
 fun calculateConjuredQuality(): (Item) -> Item = { item ->
-    Item(item.name, item.sellIn, max(item.quality - DOUBLE_QUALITY_DEGRADATION, MIN_QUALITY_ALLOWED))
+    val newQuality = item.quality - DOUBLE_QUALITY_DEGRADATION
+    Item(item.name, item.sellIn, max(newQuality, MIN_QUALITY_ALLOWED))
 }
 
-val QUALITY_FUNCTIONS = mapOf(
+fun calculateQualityFor(item: Item) = getQualityCalculationFor(item.name)(item)
+
+private val QUALITY_FUNCTIONS = mapOf(
         Products.AGED_BRIE to calculateAgedBrieQuality(),
         Products.BACKSTAGE to calculateBackstageQuality(),
         Products.CONJURED to calculateConjuredQuality(),
         Products.SULFURAS to calculateSulfurasQuality()
 )
 
-fun getQualityCalculationFor(itemName: String): (Item) -> Item {
-    return QUALITY_FUNCTIONS.getOrDefault(itemName, calculateQuality())
+private fun getQualityCalculationFor(itemName: String): (Item) -> Item {
+    return QUALITY_FUNCTIONS.getOrDefault(itemName, calculateDefaultQuality())
 }
 
 private fun sellByDateHasPassed(item: Item) = item.sellIn < 0
@@ -53,7 +57,7 @@ private fun calculateAgedBrieQualityFor(item: Item): Int {
     return item.quality + DEFAULT_QUALITY_INCREMENT
 }
 
-private fun calculateQualityFor(item: Item): Int {
+private fun calculateDefaultQualityFor(item: Item): Int {
     if (sellByDateHasPassed(item)) {
         return item.quality - DOUBLE_QUALITY_DEGRADATION
     }
